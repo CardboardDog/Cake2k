@@ -1,14 +1,26 @@
+/* 
+these are no-ops so my text editor will
+stop yelling at me (with red squiggles.)
+this file should be auto removed by sourceGen.
+*/
 namespace cake2k{
     namespace sourceGen{
         namespace replaceScripts{
-            /* 
-            these are no-ops so if sourceGens get accidentally
-            left in the game, it will still compile.
-            this file should be auto removed by sourceGen.
-            */
             namespace namespaces{}
             void frames(){}
             void starts(){}
+        }
+    }
+    namespace assetGen{
+        namespace loadAssets{
+            namespace textures{
+                namespace defines{}
+                void load(){}
+            }
+            namespace materials{
+                namespace defines{}
+                void load(){}
+            }
         }
     }
 }

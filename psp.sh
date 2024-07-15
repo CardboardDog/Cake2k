@@ -59,6 +59,23 @@ Step "Generating Source"
     exit 1
 }
 
+Step "Generating assets"
+
+if [ -d ./SDKS/image ]
+then
+    Healthy "Image Magick SDK found"
+    Log "Changing magick to executable"
+    chmod +x ./SDKS/image/magick
+    Healthy "Magick mode changed to executable"
+else
+    exit 1
+fi
+{
+    python3 assetGen.py psp
+} || {
+    exit 1
+}
+
 echo "$PATH" > .pathsave
 
 Step Compiling
