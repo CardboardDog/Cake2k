@@ -1,12 +1,12 @@
 TARGET = Main
 OBJS = Main.o
 INCDIR =
-CFLAGS = -O2 -Wall -DTARGET_PSP
+CFLAGS = -O2 -Wall -DCAKE2K_TARGET_PSP
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
 ASFLAGS = $(CFLAGS)
 LIBDIR = 
 LDFLAGS =
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = Cake2k beta PSP
+PSP_EBOOT_TITLE = $(CAKE2K_APPNAME)
 PSPSDK=$(shell psp-config --pspsdk-path)
 include $(PSPSDK)/lib/build.mak

@@ -1,16 +1,20 @@
+#ifdef CAKE2K_TARGET_PSP
 #include <pspkernel.h>
 #include <pspctrl.h>
 #include <pspdebug.h>
 #include <pspdisplay.h>
-#include "Dummy.hpp"
-PSP_MODULE_INFO("Cake2k", 0, 1, 1);
+PSP_MODULE_INFO(CAKE2K_APPNAME, 0, 1, 1);
 #define print pspDebugScreenPrintf
-using namespace cake2d::sourceGen::replaceScripts::namespaces;
+#endif
+#include "Dummy.hpp"
+using namespace cake2k::sourceGen::replaceScripts::namespaces;
 int main(void){
+#ifdef CAKE2K_TARGET_PSP
     pspDebugScreenInit();
     print("Cake2k init.");
-    cake2d::sourceGen::replaceScripts::starts();
+#endif
+    cake2k::sourceGen::replaceScripts::starts();
     while(1){
-        cake2d::sourceGen::replaceScripts::frames();
+        cake2k::sourceGen::replaceScripts::frames();
     }
 }

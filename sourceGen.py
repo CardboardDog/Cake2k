@@ -3,6 +3,7 @@ import shutil
 import pathlib
 import re
 import os
+import json
 try:
     import pywavefront
     Healthy("Python module pywavefront loaded")
@@ -38,24 +39,41 @@ for script in os.listdir("./Project/scripts"):
         except Exception as e:
             Warn("Could not add script "+script+" - "+str(e))
 Log("Implementing scripts")
-try:    
+try:
     cake2kFile = open("./Build/Main.cpp","r")
     srcMain = cake2kFile.read()
     cake2kFile.close()
     cake2kFile = open("./Build/Main.cpp","w")
-    srcMain = re.sub("using namespace cake2d::sourceGen::replaceScripts::namespaces;",namespaces,srcMain)
+    srcMain = re.sub("using namespace cake2k::sourceGen::replaceScripts::namespaces;",namespaces,srcMain)
     Healthy("Implemented namespaces")
-    srcMain = re.sub("cake2d::sourceGen::replaceScripts::starts\(\)\;",startCalls,srcMain)
+    srcMain = re.sub("cake2k::sourceGen::replaceScripts::starts\(\)\;",startCalls,srcMain)
     Healthy("Implemented start")
-    srcMain = re.sub("cake2d::sourceGen::replaceScripts::frames\(\)\;",frameCalls,srcMain)
+    srcMain = re.sub("cake2k::sourceGen::replaceScripts::frames\(\)\;",frameCalls,srcMain)
     Healthy("Implemented frame")
     Log("Assuming sourceGen is replaced")
     Log("Removing dummy header")
     srcMain = re.sub("#include \"Dummy\.hpp\"","//dummy was here",srcMain)
     Healthy("Dummy header removed")
+except Exception as e:
+    Error("Could not implement scripts - "+str(e))
+    exit(1)
+Log("Adding export settings")
+try:
+    settings = json.loads(open("./Project/app.2ki","r").read())
+    Healthy("Loaded export settings")
+    srcMain = "#define CAKE2K_APPNAME \""+settings["Name"]+"\"\n"+srcMain
+    Healthy("Added CAKE2K_APPNAME to source")
+    makefile = open("./Build/Makefile","r")
+    makefileSrc = makefile.read()
+    makefile.close()
+    makefile = open("./Build/Makefile","w")
+    makefileSrc = "CAKE2K_APPNAME := "+settings["Name"]+"\n"+makefileSrc
+    makefile.write(makefileSrc)
+    makefile.close()
+    Healthy("Added CAKE2K_APPNAME to make")
     cake2kFile.write(srcMain)
     cake2kFile.close()
 except Exception as e:
-    Error("Could not implement scripts - "+str(e))
+    Error("Could not add export settings  - "+str(e))
     exit(1)
 Healthy("Scripts implemented")

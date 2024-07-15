@@ -3,6 +3,6 @@ namespace exampleScript{
         print("exampleScript start");
     }
     void frame(){
-        print("exampleScript frame ");
+        //print("exampleScript frame ");
     }
 }

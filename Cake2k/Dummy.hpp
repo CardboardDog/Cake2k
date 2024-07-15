@@ -1,4 +1,4 @@
-namespace cake2d{
+namespace cake2k{
     namespace sourceGen{
         namespace replaceScripts{
             /* 
