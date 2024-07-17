@@ -11,8 +11,6 @@ mkdir ./Build/source
 mkdir ./Build/data
 
 export PATH=/opt/devkitpro/tools/bin/:$PATH
-dkp-pacman -Syu --noconfirm
-dkp-pacman --sync --needed --noconfirm libfat-ogc ppc-libpng ppc-freetype ppc-libjpeg-turbo
 
 git clone https://github.com/GRRLIB/GRRLIB.git
 
