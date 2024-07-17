@@ -1,6 +1,6 @@
 {
     "texture":"example",
-    "shine":0,
+    "shine":50,
     "smooth":false,
     "filter":false,
     "lit":true,

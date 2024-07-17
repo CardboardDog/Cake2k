@@ -5,18 +5,18 @@
 #include <wiiuse/wpad.h>
 namespace assets{
     namespace textures{
-        //using namespace cake2k::assetGen::loadAssets::textures::defines;
+        using namespace cake2k::assetGen::loadAssets::textures::defines;
     }
     namespace materials{
-        //using namespace cake2k::assetGen::loadAssets::materials::defines;
+        using namespace cake2k::assetGen::loadAssets::materials::defines;
     }
 }
 using namespace cake2k::sourceGen::replaceScripts::namespaces;
 int main(void){
 	GRRLIB_Init();
 	WPAD_Init();
-    //cake2k::assetGen::loadAssets::textures::load();
-    //cake2k::assetGen::loadAssets::materials::load();
+    cake2k::assetGen::loadAssets::textures::load();
+    cake2k::assetGen::loadAssets::materials::load();
 	cake2k::sourceGen::replaceScripts::starts();
     while(1){
 		WPAD_ScanPads();

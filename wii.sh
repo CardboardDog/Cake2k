@@ -26,6 +26,7 @@ cp ./Makefiles/makefile.wii ./Build/Makefile
 
 python3 -m pip install pywavefront
 python3 sourceGen.py wii
+python3 assetGen.py wii
 
 cd ./Build
 

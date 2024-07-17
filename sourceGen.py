@@ -56,7 +56,6 @@ try:
     Healthy("Implemented frame")
     Log("Assuming sourceGen is replaced")
     Log("Removing dummy header")
-    srcMain = re.sub("#include \"Dummy\.hpp\"","//dummy was here",srcMain)
     Healthy("Dummy header removed")
 except Exception as e:
     Error("Could not implement scripts - "+str(e))
