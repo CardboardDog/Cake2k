@@ -1,6 +1,6 @@
 namespace exampleScript{
     void start(){
-        print("exampleScript start");
+        //print("exampleScript start");
     }
     void frame(){
         //print("exampleScript frame ");

@@ -4,6 +4,10 @@ import pathlib
 import re
 import os
 import json
+import sys
+srcPth = ""
+if sys.argv[1] == "wii":
+    scrPath = "/source/"
 try:
     import pywavefront
     Healthy("Python module pywavefront loaded")
@@ -13,7 +17,7 @@ except:
 Log("Copying Cake2k source")
 try:
     for source in os.listdir("./Cake2k"):
-        shutil.copy2("./Cake2k/"+source,"./Build/")
+        shutil.copy2("./Cake2k/"+source,"./Build"+scrPath+"/")
         Healthy("Copied Cake2k source file "+source)
 except Exception as e:
     Error("Could not copy Cake2k source - " +str(e))
@@ -40,10 +44,10 @@ for script in os.listdir("./Project/scripts"):
             Warn("Could not add script "+script+" - "+str(e))
 Log("Implementing scripts")
 try:
-    cake2kFile = open("./Build/Main.cpp","r")
+    cake2kFile = open("./Build"+scrPath+"/Main.cpp","r")
     srcMain = cake2kFile.read()
     cake2kFile.close()
-    cake2kFile = open("./Build/Main.cpp","w")
+    cake2kFile = open("./Build"+scrPath+"/Main.cpp","w")
     srcMain = re.sub("using namespace cake2k::sourceGen::replaceScripts::namespaces;",namespaces,srcMain)
     Healthy("Implemented namespaces")
     srcMain = re.sub("cake2k::sourceGen::replaceScripts::starts\(\)\;",startCalls,srcMain)

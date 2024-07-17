@@ -2,3 +2,5 @@ SDKS/*
 __pycache__
 Build
 .pathsave
+GRRLIB
+.vscode

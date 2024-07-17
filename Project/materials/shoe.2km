@@ -1,0 +1,11 @@
+{
+    "texture":"shoe",
+    "shine":0,
+    "smooth":false,
+    "filter":false,
+    "lit":true,
+    "shadows":false,
+    "cast":true,
+    "celshaded":false,
+    "mipmaps":true
+}
