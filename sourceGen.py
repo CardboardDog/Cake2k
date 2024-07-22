@@ -8,12 +8,6 @@ import sys
 srcPth = ""
 if sys.argv[1] == "wii":
     scrPath = "/source/"
-try:
-    import pywavefront
-    Healthy("Python module pywavefront loaded")
-except:
-    Error("Python module pyWavefront not installed")
-    exit(1)
 Log("Copying Cake2k source")
 try:
     for source in os.listdir("./Cake2k"):

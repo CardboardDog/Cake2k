@@ -1,4 +1,5 @@
-if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+if [[ $(/usr/bin/id -u) -ne 0 ]]
+then
     echo "Please run as root"
     exit
 fi
