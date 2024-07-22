@@ -23,8 +23,9 @@ int main(void){
 		WPAD_ScanPads();
 		GRRLIB_SetBackgroundColour(255,85,10,0xFF);
 		if(WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) break;
-        GRRLIB_3dMode(0.1,1000,45,0,0);// borrowed from GRRLIB examples :)
+        GRRLIB_3dMode(0.1,1000,45,1,0);// borrowed from GRRLIB examples :)
         GRRLIB_ObjectView(0,0,-30,rotate,rotate*2,rotate*3,1,1,1);
+        useMaterial(&assets::materials::example);
         assets::models::drawMeshcubeThing_obj0();
         cake2k::sourceGen::replaceScripts::frames();
 		GRRLIB_Render();

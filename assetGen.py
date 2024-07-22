@@ -55,20 +55,15 @@ for object in os.listdir("./Project/models/"):
         hdrCnt = 0
         indices = "namespace assets{\nnamespace models\n{"
         for mesh in objSrc.mesh_list:
-            print("new mesh")
-            print(mesh.materials[0].texture.path)
             indices = indices+"void drawMesh"+headerName+str(hdrCnt)+"(){\n"
             hdrCnt+=1
             indices += "GX_Begin(GX_TRIANGLES,GX_VTXFMT0,"+str(len(mesh.faces)*3)+");\n"
-            for face in mesh.faces:
-                indices += "GX_Position3f32("+str(objSrc.vertices[face[0]][0])+"f,"+str(objSrc.vertices[face[0]][1])+"f,"+str(objSrc.vertices[face[0]][2])+"f);\n"    
+            vertex = 0
+            while vertex < len(mesh.materials[0].vertices):
+                indices += "GX_Position3f32("+str(mesh.materials[0].vertices[vertex+5])+"f,"+str(mesh.materials[0].vertices[vertex+6])+"f,"+str(mesh.materials[0].vertices[vertex+7])+"f);\n"    
                 indices += "GX_Color1u32(0xFFFFFFFF);\n"
-                indices += "GX_Position3f32("+str(objSrc.vertices[face[1]][0])+"f,"+str(objSrc.vertices[face[1]][1])+"f,"+str(objSrc.vertices[face[1]][2])+"f);\n"
-                indices += "GX_Color1u32(0xFFFFFFFF);\n"
-                indices += "GX_Position3f32("+str(objSrc.vertices[face[2]][0])+"f,"+str(objSrc.vertices[face[2]][1])+"f,"+str(objSrc.vertices[face[2]][2])+"f);\n"
-                indices += "GX_Color1u32(0xFFFFFFFF);\n"
-                #no UVS yet :)
-                #indices += "GX_Position2f32("+str(objSrc.UVS[face[0]][0])+"f,"+str(objSrc.vertices[face[0]][1])+"f);\n"
+                indices += "GX_TexCoord2f32("+str(mesh.materials[0].vertices[vertex+0])+"f,"+str(mesh.materials[0].vertices[vertex+1])+"f);\n"
+                vertex += 8
             indices += "GX_End();\n}\n"
         indices += "}\n}"
         modelOut.write(indices)
