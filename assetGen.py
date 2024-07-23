@@ -15,7 +15,7 @@ except:
     Error("Python module pyWavefront not installed")
     exit(1)
 Log("Generating assets using - "+sys.argv[1])
-declarations = ""
+declarations = "GRRLIB_texImg* sLoad;"
 loaders = ""
 matDeclarations = ""
 matLoaders = ""
@@ -30,7 +30,10 @@ for image in os.listdir("./Project/textures"):
     shutil.copy2("./Project/textures/"+image,"./Build/"+cPth)
     name = pathlib.Path(image).stem
     declarations += "GRRLIB_texImg* "+name+";"
-    loaders += "assets::textures::"+name+" = GRRLIB_LoadTexture("+re.sub("\.","_",image)+");"
+    loaders += "assets::textures::sLoad = GRRLIB_LoadTexture("+re.sub("\.","_",image)+");"
+    loaders += "assets::textures::"+name+" = GRRLIB_CreateEmptyTexture(assets::textures::sLoad->w,assets::textures::sLoad->h);"
+    loaders += "GRRLIB_BMFX_FlipV(assets::textures::sLoad,assets::textures::"+name+");"
+    loaders += "GRRLIB_FreeTexture(assets::textures::sLoad);"
     includes += "#include \""+re.sub("\.","_",image)+".h\"\n"
 
 for material in os.listdir("./Project/materials"):
@@ -47,6 +50,9 @@ for material in os.listdir("./Project/materials"):
     matLoaders += "assets::materials::"+name+".celshaded = "+str(mat["celshaded"]).lower()+";"
     matLoaders += "assets::materials::"+name+".mipmaps = "+str(mat["mipmaps"]).lower()+";"
 indices = ""
+models = ""
+modelsDraws = ""
+modelsLoad = ""
 for object in os.listdir("./Project/models/"):
     if(re.findall("\.obj",object)):
         headerName = re.sub("\.","_",object)
@@ -69,7 +75,16 @@ for object in os.listdir("./Project/models/"):
         modelOut.write(indices)
         modelOut.close()
         includes += "#include \""+headerName+".h\"\n"
-
+        models += "\nclass "+headerName+" : public Model{\npublic:\nvoid draw();\n};"
+        models += headerName+"* "+pathlib.Path(object).stem+";\n"
+        modelsDraws += "void assets::models::"+headerName+"::draw(){\n"
+        count = 0
+        for mesh in objSrc.mesh_list:
+            modelsDraws += "useMaterial(&assets::materials::"+pathlib.Path(mesh.materials[0].texture.path).stem+");\n"
+            modelsDraws += "drawMesh"+headerName+str(count)+"();\n"
+            count += 1
+        modelsDraws += "}"
+        modelsLoad += "assets::models::"+pathlib.Path(object).stem+" = new assets::models::"+headerName+"();\n"
 
 srcFl = open("./Build/"+srcPth+"/Main.cpp","r")
 srcMain = srcFl.read()
@@ -80,6 +95,9 @@ srcMain = re.sub("cake2k::assetGen::loadAssets::textures::load\(\)\;",loaders,sr
 srcMain = re.sub("using namespace cake2k::assetGen::loadAssets::materials::defines\;",matDeclarations,srcMain)
 srcMain = re.sub("cake2k::assetGen::loadAssets::materials::load\(\)\;",matLoaders,srcMain)
 srcMain = re.sub("#include \"Dummy.hpp\"",includes,srcMain)
+srcMain = re.sub("using namespace cake2k::assetGen::loadAssets::models::defines\;",models,srcMain)
+srcMain = re.sub("using namespace cake2k::assetGen::loadAssets::models::renderers\;",modelsDraws,srcMain)
+srcMain = re.sub("cake2k::assetGen::loadAssets::models::load\(\)\;",modelsLoad,srcMain)
 
 srcFl = open("./Build/"+srcPth+"/Main.cpp","w")
 srcFl.write(srcMain)

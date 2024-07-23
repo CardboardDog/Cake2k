@@ -21,6 +21,11 @@ namespace cake2k{
                 namespace defines{}
                 void load(){}
             }
+            namespace models{
+                namespace defines{}
+                namespace renderers{}
+                void load(){}
+            }
         }
     }
 }

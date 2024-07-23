@@ -32,3 +32,7 @@ python3 assetGen.py wii
 cd ./Build
 
 make
+
+cd ../
+
+chmod a+rwx -R ./Build
