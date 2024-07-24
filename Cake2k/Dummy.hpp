@@ -26,6 +26,10 @@ namespace cake2k{
                 namespace renderers{}
                 void load(){}
             }
+            namespace scenes{
+                namespace defines{}
+                void load(){}
+            }
         }
     }
 }

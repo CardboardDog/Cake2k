@@ -53,6 +53,8 @@ indices = ""
 models = ""
 modelsDraws = ""
 modelsLoad = ""
+sceneDeclarations = ""
+sceneLoad = ""
 for object in os.listdir("./Project/models/"):
     if(re.findall("\.obj",object)):
         headerName = re.sub("\.","_",object)
@@ -85,6 +87,22 @@ for object in os.listdir("./Project/models/"):
             count += 1
         modelsDraws += "}"
         modelsLoad += "assets::models::"+pathlib.Path(object).stem+" = new assets::models::"+headerName+"();\n"
+count = 0
+for scene in os.listdir("./Project/scenes"):
+    if(re.findall("\.2k",scene)):
+        sceneSrc = json.loads(open("./Project/scenes/"+scene,"r").read())
+        sceneDeclarations += "Scene "+pathlib.Path(scene).stem+" = "+str(count)+";\n"
+        sceneLoad += "case "+str(count)+":\n{\n"
+        sceneLoad += "Object* nObj;\n" 
+        for srcObj in sceneSrc["world"]:
+            sceneLoad += "nObj = new Object();\n"
+            sceneLoad += "nObj->model = assets::models::"+srcObj["model"]+";\n"
+            sceneLoad += "nObj->setPosition("+str(srcObj["x"])+","+str(srcObj["y"])+","+str(srcObj["z"])+");\n"
+            sceneLoad += "nObj->setRotation("+str(srcObj["rx"])+","+str(srcObj["ry"])+","+str(srcObj["rz"])+");\n"
+            sceneLoad += "nObj->setScale("+str(srcObj["sx"])+","+str(srcObj["sy"])+","+str(srcObj["sz"])+");\n"
+            sceneLoad += "sceneObjects.push_back(nObj);\n"
+        sceneLoad+= "break;\n}\n"
+    count+=1
 
 srcFl = open("./Build/"+srcPth+"/Main.cpp","r")
 srcMain = srcFl.read()
@@ -92,12 +110,17 @@ srcFl.close()
 
 srcMain = re.sub("using namespace cake2k::assetGen::loadAssets::textures::defines\;",declarations,srcMain)
 srcMain = re.sub("cake2k::assetGen::loadAssets::textures::load\(\)\;",loaders,srcMain)
+
 srcMain = re.sub("using namespace cake2k::assetGen::loadAssets::materials::defines\;",matDeclarations,srcMain)
 srcMain = re.sub("cake2k::assetGen::loadAssets::materials::load\(\)\;",matLoaders,srcMain)
 srcMain = re.sub("#include \"Dummy.hpp\"",includes,srcMain)
+
 srcMain = re.sub("using namespace cake2k::assetGen::loadAssets::models::defines\;",models,srcMain)
 srcMain = re.sub("using namespace cake2k::assetGen::loadAssets::models::renderers\;",modelsDraws,srcMain)
 srcMain = re.sub("cake2k::assetGen::loadAssets::models::load\(\)\;",modelsLoad,srcMain)
+
+srcMain = re.sub("using namespace cake2k::assetGen::loadAssets::scenes::defines\;",sceneDeclarations,srcMain)
+srcMain = re.sub("cake2k::assetGen::loadAssets::scenes::load\(\)\;",sceneLoad,srcMain)
 
 srcFl = open("./Build/"+srcPth+"/Main.cpp","w")
 srcFl.write(srcMain)

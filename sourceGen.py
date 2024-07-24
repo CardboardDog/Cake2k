@@ -29,9 +29,9 @@ for script in os.listdir("./Project/scripts"):
             namespaces = namespaces+content+"\n"
             namespace = pathlib.Path(script).stem
             Healthy("Loaded namespaces from "+script)
-            startCalls = startCalls+"\t"+namespace+"::start();\n"
+            startCalls = startCalls+"\tscripts::"+namespace+"::start();\n"
             Healthy("Loaded start from "+namespace+"::start();")
-            frameCalls = frameCalls+"\t\t"+namespace+"::frame();\n"
+            frameCalls = frameCalls+"\t\tscripts::"+namespace+"::frame();\n"
             Healthy("Loaded frame from "+namespace+"::frame();")
             scriptFile.close()
         except Exception as e:

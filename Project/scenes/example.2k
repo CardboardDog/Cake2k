@@ -1,9 +1,9 @@
 {
     "world":[
         {
-            "x":1,
-            "y":1,
-            "z":1,
+            "x":0,
+            "y":0,
+            "z":0,
             "rx":45,
             "ry":45,
             "rz":45,
@@ -12,17 +12,48 @@
             "sz":1,
             "type":"object",
             "model":"cubeThing",
-            "name":"cube"
+            "name":"cube",
+            "enabled":true
+        },
+        {
+            "x":6,
+            "y":0,
+            "z":0,
+            "rx":-45,
+            "ry":0,
+            "rz":-45,
+            "sx":1.25,
+            "sy":1.25,
+            "sz":1.25,
+            "type":"object",
+            "model":"cubeThing",
+            "name":"cube2",
+            "enabled":true
+        },
+        {
+            "x":-6,
+            "y":4,
+            "z":0,
+            "rx":-45,
+            "ry":0,
+            "rz":45,
+            "sx":1,
+            "sy":1,
+            "sz":1,
+            "type":"object",
+            "model":"cubeThing",
+            "name":"cube3",
+            "enabled":true
         }
     ],
     "fog":{
-        "eanbled":true,
+        "enabled":true,
         "ambient":"0xFF0000",
         "end":1000,
         "begin":0
     },
     "bloom":{
-        "eanbled":true,
+        "enabled":true,
         "focus":4,
         "intensity":100,
         "threshold":50

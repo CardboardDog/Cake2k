@@ -4,6 +4,9 @@
 #include "Materials.hpp"
 #include "Dummy.hpp"
 #include "Models.hpp"
+#include "Object.hpp"
+#include "Scene.hpp"
+#include <vector>
 namespace assets{
     namespace textures{
         using namespace cake2k::assetGen::loadAssets::textures::defines;
@@ -14,8 +17,10 @@ namespace assets{
     namespace models{
         using namespace cake2k::assetGen::loadAssets::models::defines;
     }
+    namespace scenes{
+        using namespace cake2k::assetGen::loadAssets::scenes::defines;
+    }
 }
-using namespace cake2k::sourceGen::replaceScripts::namespaces;
 using namespace cake2k::assetGen::loadAssets::models::renderers;
 namespace settings{
     namespace global{
@@ -40,8 +45,27 @@ namespace settings{
         }
     }
 }
+namespace scene{
+    std::vector<Object*> sceneObjects;
+    void clearObjects(){
+        for(unsigned int i=0;i<sceneObjects.size();i++){
+            delete sceneObjects[i];
+        }
+        sceneObjects.clear();
+    }
+    void load(Scene scene){
+        clearObjects();
+        switch(scene){
+            cake2k::assetGen::loadAssets::scenes::load();
+            default:
+                break;
+        }
+    }
+}
+namespace scripts{
+    using namespace cake2k::sourceGen::replaceScripts::namespaces;
+}
 int main(void){
-    float rotate = 0;
 	GRRLIB_Init();
 	WPAD_Init();
     cake2k::assetGen::loadAssets::textures::load();
@@ -52,12 +76,13 @@ int main(void){
 		WPAD_ScanPads();
 		GRRLIB_SetBackgroundColour(255,85,10,0xFF);
 		if(WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) break;
+        GRRLIB_Camera3dSettings(0.0f,0.0f,13.0f, 0,1,0, 0,0,0);
         GRRLIB_3dMode(0.1,1000,45,1,0);// borrowed from GRRLIB examples :)
-        GRRLIB_ObjectView(0,0,-30,rotate,rotate*2,rotate*3,1,1,1);
-        assets::models::cubeThing->draw();
+        for(unsigned int gameObject=0;gameObject<scene::sceneObjects.size();gameObject++){
+            scene::sceneObjects[gameObject]->draw();
+        }
         cake2k::sourceGen::replaceScripts::frames();
 		GRRLIB_Render();
-        rotate+=0.3f;
     }
 	GRRLIB_Exit();
 	exit(0);

@@ -1,5 +1,6 @@
 namespace exampleScript{
     void start(){
+        scene::load(assets::scenes::example);
         //print("exampleScript start");
     }
     void frame(){
