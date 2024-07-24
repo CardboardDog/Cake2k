@@ -15,7 +15,7 @@ Here are my **plans** for Cake2k:
 - [X] Texture Loading
 - [X] Materials
 - [X] Script Loading 
-- [ ] Model Loading
+- [X] Model Loading
 - [ ] Scene Loading / Scene system
 - [ ] 3D Transformations
 - [ ] UI Loading
