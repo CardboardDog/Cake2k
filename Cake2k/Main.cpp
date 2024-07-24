@@ -17,6 +17,29 @@ namespace assets{
 }
 using namespace cake2k::sourceGen::replaceScripts::namespaces;
 using namespace cake2k::assetGen::loadAssets::models::renderers;
+namespace settings{
+    namespace global{
+        // no global settings yet
+    }
+    namespace scene{
+        namespace fog{
+            f32 start;
+            f32 end;
+            GXColor color;
+            bool enabled;
+        }
+        namespace bloom{
+            int focus;
+            int intensity;
+            int threshold;
+            bool enabled;
+        }
+        namespace sun{
+            u32 color = 0x000000FF;
+            float rotation[2] = {0.0f,0.0f};
+        }
+    }
+}
 int main(void){
     float rotate = 0;
 	GRRLIB_Init();

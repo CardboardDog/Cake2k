@@ -10,19 +10,35 @@
             "sx":1,
             "sy":1,
             "sz":1,
+            "type":"object",
             "model":"cubeThing",
             "name":"cube"
         }
     ],
+    "fog":{
+        "eanbled":true,
+        "ambient":"0xFF0000",
+        "end":1000,
+        "begin":0
+    },
+    "bloom":{
+        "eanbled":true,
+        "focus":4,
+        "intensity":100,
+        "threshold":50
+    },
+    "sun":{
+        "ambient":"0xFFFFFF",
+        "sx":45,
+        "sy":45
+    },
     "camera":{
-        "x":1,
-        "y":1,
-        "z":1,
-        "rx":45,
-        "ry":45,
-        "rz":45,
-        "sx":1,
-        "sy":1,
-        "sz":1,
+        "fov":90,
+        "x":0,
+        "y":0,
+        "z":0,
+        "rx":0,
+        "ry":0,
+        "rz":0
     }
 }
